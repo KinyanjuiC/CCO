@@ -1,5 +1,5 @@
 const express = require('express');
-const Feedback = require('C:\\Users\\Cynthia\\Downloads\\undeviating\\Feedback.js');
+const Feedback = require('./Feedback');
 const jwt = require('jsonwebtoken');
 
 const router = express.Router();
