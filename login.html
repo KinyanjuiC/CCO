@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Login - Cloud Computing Optimization</title>
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900%7CQuicksand:400,700%7CQuestrial" rel="stylesheet" />
+  <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+<div id="header-wrapper">
+  <div id="header" class="container">
+    <div id="logo"><h1><a href="index.html">Cloud Computing Optimization (CCO)</a></h1></div>
+    <div id="menu">
+      <ul>
+        <li><a href="index.html">Homepage</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="contact.html">Contact Me</a></li>
+        <li class="active"><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="container">
+    <div class="title"><h2>Login</h2></div>
+    <form action="/login" method="post">
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+      
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password" required><br><br>
+      
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
+  </div>
+</div>
+
+<div id="footer">
+  <div class="container">
+    <div class="fbox1">
+      <span class="icon icon-map-marker"></span>
+      <span>1234 Cloud Campus, Nairobi, Kenya</span>
+    </div>
+    <div class="fbox1">
+      <span class="icon icon-phone"></span>
+      <span>Telephone: +254 723 100 967</span>
+    </div>
+    <div class="fbox1">
+      <span class="icon icon-envelope"></span>
+      <span>collinskimani6@gmail.com</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+<script>
+  document.querySelector('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const response = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Login successful!');
+        localStorage.setItem('token', data.token); // Save JWT for future requests
+        window.location.href = 'resources.html'; // Redirect to resources page
+      } else {
+        alert(data.error || 'Login failed');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred');
+    }
+  });
+</script>

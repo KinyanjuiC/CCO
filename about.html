@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>About Me - Cloud Computing Optimization</title>
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900%7CQuicksand:400,700%7CQuestrial" rel="stylesheet" />
+  <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+<div id="header-wrapper">
+  <div id="header" class="container">
+    <div id="logo"><h1><a href="index.html">Cloud Computing Optimization (CCO)</a></h1></div>
+    <div id="menu">
+      <ul>
+        <li><a href="index.html">Homepage</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li class="active"><a href="about.html">About Me</a></li>
+        <li><a href="contact.html">Contact Me</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="container">
+    <div class="title"><h2>About the Project</h2></div>
+    <p>The Cloud Computing Optimization project aims to bridge the gap in cloud service accessibility for underprivileged students in Sub-Saharan Africa. By focusing on the safety, scalability, and performance of cloud services, CCO empowers students with essential academic resources that support their growth and learning.</p>
+    
+    <h3>User Testimonials</h3>
+    <div class="testimonial">
+      <p>"This platform has allowed me to access educational materials seamlessly!" - Student User</p>
+    </div>
+    <div class="testimonial">
+      <p>"Our students now have reliable access to virtual labs and cloud storage!" - Educator</p>
+    </div>
+
+    <h3>Submit Your Feedback</h3>
+    <form action="/submit_feedback" method="post">
+      <textarea name="feedback" rows="4" cols="50" placeholder="Share your experience..."></textarea><br>
+      <input type="submit" value="Submit Feedback">
+    </form>
+  </div>
+</div>
+
+<div id="footer">
+  <div class="container">
+    <div class="fbox1">
+      <span class="icon icon-map-marker"></span>
+      <span>1234 Cloud Campus, Nairobi, Kenya</span>
+    </div>
+    <div class="fbox1">
+      <span class="icon icon-phone"></span>
+      <span>Telephone: +254 723 100 967</span>
+    </div>
+    <div class="fbox1">
+      <span class="icon icon-envelope"></span>
+      <span>collinskimani6@gmail.com</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+<script>
+  document.querySelector('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const feedback = document.querySelector('textarea').value;
+    const token = localStorage.getItem('token'); // Retrieve JWT
+
+    try {
+      const response = await fetch('/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ feedback }),
+      });
+
+      if (response.ok) {
+        alert('Feedback submitted successfully!');
+      } else {
+        alert('You must be logged in to submit feedback.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred');
+    }
+  });
+</script>
+
+
