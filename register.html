@@ -5,6 +5,25 @@
   <title>Register - Cloud Computing Optimization</title>
   <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900%7CQuicksand:400,700%7CQuestrial" rel="stylesheet" />
   <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+  <style>
+    form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+form input, form button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+  </style>
 </head>
 <body>
 <div id="header-wrapper">
@@ -60,3 +79,48 @@
 </div>
 </body>
 </html>
+
+<script>
+  const BASE_URL = "https://cloud-computing-optimization-apt3065proj.onrender.com";
+
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const response = await fetch(`${BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        document.getElementById('registrationStatus').innerText = 'Registration successful!';
+        window.location.href = 'login.html'; // Redirect to login page
+      } else {
+        document.getElementById('registrationStatus').innerText = result.error || 'Registration failed.';
+      }
+    } catch (error) {
+      console.error(error);
+      document.getElementById('registrationStatus').innerText = 'An error occurred. Please try again.';
+    }
+  });
+</script>
+
+<script>
+  const BASE_URL = "https://cloud-computing-optimization-apt3065proj.onrender.com";
+  document.getElementById('registerForm').addEventListener('submit', (e) => {
+    const password = document.getElementById('password').value;
+
+    if (password.length < 8) {
+      e.preventDefault();
+      document.getElementById('registrationStatus').innerText = 'Password must be at least 8 characters long.';
+    }
+  });
+</script>
+
