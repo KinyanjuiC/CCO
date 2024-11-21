@@ -48,6 +48,13 @@
 			<p>Resource allocation is optimized to ensure that students can access educational materials quickly and efficiently.</p>
 			<a href="#" class="button">Learn More</a> </div>
 	</div>
+	<div id="adminDashboard" style="display: none;">
+		<div class="title">
+			<h2>Admin Dashboard</h2>
+		</div>
+		<h3>Registered Users</h3>
+      <div id="userList"></div>
+	</div>
 </div>
 <div id="footer">
 	<div class="container">
@@ -74,4 +81,44 @@
 		<li><a href="#" class="icon icon-tumblr"><span>Google+</span></a></li>
 		<li><a href="#" class="icon icon-rss"><span>Pinterest</span></a></li>
 	</ul></div>
+
+<script>
+  const BASE_URL = "https://cloud-computing-optimization-apt3065proj.onrender.com";
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+
+    try {
+      // Verify user role
+      const response = await fetch(`${BASE_URL}/auth/verify-role`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+
+      if (data.role === 'admin') {
+        // Show admin dashboard if the user is an admin
+        document.getElementById('adminDashboard').style.display = 'block';
+
+        // Fetch user list
+        const userResponse = await fetch(`${BASE_URL}/admin/users`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const users = await userResponse.json();
+
+        if (userResponse.ok) {
+          const userList = document.getElementById('userList');
+          userList.innerHTML = '<h3>Registered Users</h3>';
+          users.forEach((user) => {
+            userList.innerHTML += `<p>${user.name} (${user.email})</p>`;
+          });
+        } else {
+          alert('Failed to fetch user list.');
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error loading admin dashboard.');
+    }
+  });
+</script>
 </body></html>
