@@ -44,7 +44,7 @@ form input, form button {
 
 <div class="wrapper">
   <div class="container">
-    <div class="title"><h2>Register</h2></div>
+    <div class="title" style="text-align: center;"><h2>Register</h2></div>
     <form action="/register" method="post">
       <label for="name">Name:</label><br>
       <input type="text" id="name" name="name" required><br><br>
@@ -54,8 +54,14 @@ form input, form button {
       
       <label for="password">Password:</label><br>
       <input type="password" id="password" name="password" required><br><br>
-      
-      <input type="submit" value="Register">
+
+      <label for="role">Role:</label><br>
+      <select id="role" name="role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select><br><br>
+
+      <button type="submit">Register</button>
     </form>
   </div>
   </div>
@@ -89,12 +95,13 @@ form input, form button {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const role = document.getElementById('role').value;
 
     try {
       const response = await fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, role}),
       });
 
       const result = await response.json();
